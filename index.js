@@ -19,4 +19,21 @@ db.sequelize.sync()
         console.log(err);
     })
 
-    
+    app.post('/komik' , async (req, res) => {
+        const data = req.body;
+        try{
+            const komik = await db.Komik.create(data);
+            res.send(komik);
+        } catch (error){}
+        res.send({massage: error.massage});
+    });
+
+    app.get('/komik', async (req, res) => {
+        try{
+            const komik = await db.Komik.findAll();
+            res.send(komik);
+        }
+        catch (error){
+            res.send ({massage: error.massage});
+        }
+    });
