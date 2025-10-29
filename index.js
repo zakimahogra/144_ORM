@@ -37,3 +37,34 @@ db.sequelize.sync()
             res.send ({massage: error.massage});
         }
     });
+
+    app.put('/komik/:id' , async (req,res) => {
+        const id = req.params.id;
+        const dara = req.body;
+        try{
+            const komik = await db.Komik.findByPk(id);
+            if (!komik){
+                return res.status(404).send({massage: 'Komik not found'});
+            }
+            await komik.update(data);
+            res.send({masssage : "Komik berhasil diupdate", komik});
+        }
+        catch (error){
+            res.send ({massage: error.massage});
+        }
+    });
+
+    app.delete('/komik/:id' , async (req,res) => {
+        const id = req.params.id;
+        try{
+            const komik = await db.Komik.findByPk(id);
+            if (!komik){
+                return res.status(404).send({massage: 'Komik not found'});
+            }
+            await komik.update(data);
+            res.send({masssage : "Komik berhasil dihapus", komik});
+        }
+        catch (error){
+            res.status(500).send(err)
+        }
+    })
